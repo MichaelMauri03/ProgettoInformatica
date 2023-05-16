@@ -25,7 +25,7 @@ $resultGiocatore = $conn->query($sqlGiocatore);
 // Gestisci il reindirizzamento in base all'appartenenza a una società o a un giocatore
 if ($resultSocieta->num_rows > 0) {
     // L'email appartiene a una società, reindirizzamento alla pagina della società
-    header('Location: pagina_societa.php');
+    header('Location: dashboard società.php');
     exit();
 } elseif ($resultGiocatore->num_rows > 0) {
     // L'email appartiene a un giocatore, reindirizzamento alla pagina del giocatore
