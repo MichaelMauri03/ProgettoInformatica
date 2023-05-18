@@ -1,109 +1,133 @@
+<!-- Dashboard Società -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagina della Società</title>
-  <!-- Collegamento ai file CSS di Bootstrap -->
+  <title>Dashboard Società</title>
+  <!-- Collegamento a Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-8">
-        <h2>Dashboard della Società</h2>
-        <hr>
-        <h4>Elenco Giocatori</h4>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Cognome</th>
-              <th>Ruolo</th>
-              <th>Numero Gol Segnati</th>
-              <th>Numero Assist</th>
-              <th>Cartellini Gialli</th>
-              <th>Cartellini Rossi</th>
-              <th>Partite Giocate</th>
-              <th>Azioni</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Itera su ogni giocatore -->
-            <?php
-            // Includi il file di backend per ottenere i giocatori
-            include 'get_giocatori.php';
-            
-            // Esegui la query per ottenere i giocatori
-            $giocatori = getGiocatori();
+  <div class="container">
+    <h1>Dashboard Società</h1>
 
-            // Mostra i giocatori nell'elenco
-            foreach ($giocatori as $giocatore) {
-              echo "<tr>";
-              echo "<td>{$giocatore['ID_giocatore']}</td>";
-              echo "<td>{$giocatore['Nome']}</td>";
-              echo "<td>{$giocatore['Cognome']}</td>";
-              echo "<td>{$giocatore['Ruolo']}</td>";
-              echo "<td>{$giocatore['Numero_gol_segnati']}</td>";
-              echo "<td>{$giocatore['Numero_assist']}</td>";
-              echo "<td>{$giocatore['Cartellini_gialli']}</td>";
-              echo "<td>{$giocatore['Cartellini_rossi']}</td>";
-              echo "<td>{$giocatore['Partite_giocate']}</td>";
-              echo "<td>";
-              echo "<a href='modifica_statistiche.php?id={$giocatore['ID_giocatore']}' class='btn btn-primary btn-sm'>Modifica</a>";
-              echo "<a href='elimina_giocatore.php?id={$giocatore['ID_giocatore']}' class='btn btn-danger btn-sm ml-2'>Elimina</a>";
-              echo "</td>";
-              echo "</tr>";
-            }
-            ?>
-          </tbody>
-        </table>
+    <!-- Elenco dei giocatori -->
+    <h2>Giocatori</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Ruolo</th>
+          <th>Numero di Gol</th>
+          <th>Numero di Assist</th>
+          <th>Cartellini Gialli</th>
+          <th>Cartellini Rossi</th>
+          <th>Partite Giocate</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        // Ottenere l'elenco dei giocatori
+        include 'get_giocatori.php';
+        $giocatori = getGiocatori();
+
+        // Ciclo per visualizzare i giocatori
+        foreach ($giocatori as $giocatore) {
+          echo "<tr>";
+          echo "<td>" . $giocatore['Nome'] . "</td>";
+          echo "<td>" . $giocatore['Cognome'] . "</td>";
+          echo "<td>" . $giocatore['Ruolo'] . "</td>";
+          echo "<td>" . $giocatore['Numero_gol_segnati'] . "</td>";
+          echo "<td>" . $giocatore['Numero_assist'] . "</td>";
+          echo "<td>" . $giocatore['Cartellini_gialli'] . "</td>";
+          echo "<td>" . $giocatore['Cartellini_rossi'] . "</td>";
+          echo "<td>" . $giocatore['Partite_giocate'] . "</td>";
+          echo "<td>";
+          echo "<button class='btn btn-primary' onclick='apriModificaStatisticheModal(" . $giocatore['ID_giocatore'] . ")'>Modifica</button>";
+          echo "<button class='btn btn-danger' onclick='eliminaGiocatore(" . $giocatore['ID_giocatore'] . ")'>Elimina</button>";
+          echo "</td>";
+          echo "</tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+
+    <!-- Modulo di Modifica Statistiche Calciatore -->
+    <div class="modal fade" id="modificaStatisticheModal" tabindex="-1" role="dialog" aria-labelledby="modificaStatisticheModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modificaStatisticheModalLabel">Modifica Statistiche Calciatore</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="modifica_statistiche.php" method="post">
+              <input type="hidden" name="id_giocatore" id="id_giocatore" value="">
+              <div class="form-group">
+                <label for="numero_gol">Numero di Gol:</label>
+                <input type="number" class="form-control" name="numero_gol" id="numero_gol" required>
+              </div>
+              <div class="form-group">
+                <label for="numero_assist">Numero di Assist:</label>
+                <input type="number" class="form-control" name="numero_assist" id="numero_assist" required>
+              </div>
+              <div class="form-group">
+                <label for="cartellini_gialli">Cartellini Gialli:</label>
+                <input type="number" class="form-control" name="cartellini_gialli" id="cartellini_gialli" required>
+              </div>
+              <div class="form-group">
+                <label for="cartellini_rossi">Cartellini Rossi:</label>
+                <input type="number" class="form-control" name="cartellini_rossi" id="cartellini_rossi" required>
+              </div>
+              <div class="form-group">
+                <label for="partite_giocate">Partite Giocate:</label>
+                <input type="number" class="form-control" name="partite_giocate" id="partite_giocate" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="col-md-4">
-        <h4>Aggiungi Giocatore</h4>
-        <form method="POST" action="aggiungi_giocatore.php">
-            <div class="form-group">
-              <label for="nome">Nome</label>
-              <input type="text" class="form-control" id="nome" name="nome" required>
-            </div>
-            <div class="form-group">
-              <label for="cognome">Cognome</label>
-              <input type="text" class="form-control" id="cognome" name="cognome" required>
-            </div>
-            <div class="form-group">
-              <label for="ruolo">Ruolo</label>
-              <input type="text" class="form-control" id="ruolo" name="ruolo" required>
-            </div>
-            <div class="form-group">
-              <label for="numero_gol">Numero Gol Segnati</label>
-              <input type="number" class="form-control" id="numero_gol" name="numero_gol" required>
-            </div>
-          <div class="form-group">
-            <label for="numero_assist">Numero Assist</label>
-            <input type="number" class="form-control" id="numero_assist" name="numero_assist" required>
-          </div>
-          <div class="form-group">
-              <label for="cartellini_gialli">Cartellini Gialli</label>
-              <input type="number" class="form-control" id="cartellini_gialli" name="cartellini_gialli" required>
-          </div>
-          <div class="form-group">
-              <label for="cartellini_rossi">Cartellini Rossi</label>
-              <input type="number" class="form-control" id="cartellini_rossi" name="cartellini_rossi" required>
-           </div>
-          <div class="form-group">
-              <label for="partite_giocate">Partite Giocate</label>
-              <input type="number" class="form-control" id="partite_giocate" name="partite_giocate" required>
-            </div>
-          <button type="submit" class="btn btn-success">Aggiungi</button>
-        </form>
-</div>
-</div>
+    </div>
 
+    <!-- Script per popolare il modulo con le statistiche del calciatore selezionato -->
+    <script>
+    // Funzione per aprire il modulo di modifica statistiche
+    function apriModificaStatisticheModal(id_giocatore) {
+        // Popola i campi del modulo con i valori del calciatore selezionato
+        document.getElementById('id_giocatore').value = id_giocatore;
+        // Apri il modulo
+        $('#modificaStatisticheModal').modal('show');
+      }
+
+    // Funzione per eliminare un giocatore
+    function eliminaGiocatore(id_giocatore) {
+      /// Richiesta di conferma all'utente prima di eliminare il giocatore
+  if (confirm("Sei sicuro di voler eliminare questo giocatore?")) {
+    // Effettua una richiesta AJAX per eliminare il giocatore
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // Aggiorna la pagina per visualizzare l'elenco dei giocatori aggiornato
+        location.reload();
+      }
+    };
+    xhttp.open("GET", "elimina_giocatore.php?id_giocatore=" + id_giocatore, true);
+    xhttp.send();
+  }
+    }
+    </script>
+
+    <!-- Collegamento a jQuery e Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </div>
-  <!-- Collegamento ai file JavaScript di Bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

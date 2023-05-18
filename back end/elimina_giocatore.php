@@ -10,18 +10,18 @@ if ($conn->connect_error) {
     die("Connessione al database fallita: " . $conn->connect_error);
 }
 
-// Ricevi l'ID del giocatore da eliminare dalla query string
-$id = $_GET['id'];
+// Verifica se è stato fornito l'ID del giocatore da eliminare
+if (isset($_GET['id_giocatore'])) {
+    $id_giocatore = $_GET['id_giocatore'];
 
-// Query per eliminare il giocatore dal database
-$sql = "DELETE FROM Giocatore WHERE ID_giocatore = $id";
+    // Query per eliminare il giocatore
+    $sql = "DELETE FROM Giocatore WHERE ID_giocatore = $id_giocatore";
 
-if ($conn->query($sql) === TRUE) {
-// Reindirizza alla pagina della società dopo l'eliminazione del giocatore
-header('Location: pagina_societa.php');
-exit();
-} else {
-echo "Errore durante l'eliminazione del giocatore: " . $conn->error;
+    if ($conn->query($sql) === TRUE) {
+        echo "Giocatore eliminato con successo";
+    } else {
+        echo "Errore durante l'eliminazione del giocatore: " . $conn->error;
+    }
 }
 
 // Chiudi la connessione al database
