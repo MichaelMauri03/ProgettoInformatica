@@ -1,0 +1,18 @@
+-- Popolamento della tabella Societa
+INSERT INTO Societa (ID_societa, Nome_societa, Email_amministratore, Password_amministratore)
+VALUES (1, 'Juventus', 'juventus@gmail.com', 'juventus123'),
+       (2, 'Venezia', 'venezia@gmail.com', 'venezia123');
+
+-- Popolamento della tabella Giocatore per la Societa Alpha
+INSERT INTO Giocatore (ID_giocatore, ID_societa, Nome, Cognome, Email_giocatore, Password_giocatore, Ruolo, Numero_gol_segnati, Numero_assist, Cartellini_gialli, Cartellini_rossi, Partite_giocate)
+VALUES (1, 1, 'Mario', 'Rossi', 'mario@gmail.com', 'mario123', 'Attaccante', 0, 0, 0, 0, 0),
+       (2, 1, 'Luca', 'Verdi', 'luca@gmail.com', 'luca123', 'Centrocampista', 0, 0, 0, 0, 0),
+       (3, 1, 'Giovanni', 'Bianchi', 'giovanni@gmail.com', 'giovanni123', 'Difensore', 0, 0, 0, 0, 0),
+       (4, 1, 'Roberto', 'Neri', 'roberto@gmail.com', 'roberto123', 'Centrocampista', 0, 0, 0, 0, 0);
+
+-- Popolamento della tabella Giocatore per la Societa Beta
+INSERT INTO Giocatore (ID_giocatore, ID_societa, Nome, Cognome, Email_giocatore, Password_giocatore, Ruolo, Numero_gol_segnati, Numero_assist, Cartellini_gialli, Cartellini_rossi, Partite_giocate)
+VALUES (5, 2, 'Andrea', 'Russo', 'andrea@gmail.com', 'andrea123', 'Attaccante', 0, 0, 0, 0, 0),
+       (6, 2, 'Fabio', 'Giallo', 'fabio@gmail.com', 'fabio123', 'Centrocampista', 0, 0, 0, 0, 0),
+       (7, 2, 'Simone', 'Baldi', 'simone@gmail.com', 'simone123', 'Difensore', 0, 0, 0, 0, 0),
+       (8, 2, 'Antonio', 'Nero', 'antonio@gmail.com', 'antonio123', 'Centrocampista', 0, 0, 0, 0, 0);
