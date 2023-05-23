@@ -1,3 +1,20 @@
+<?php
+// Avvia la sessione
+session_start();
+
+// Verifica se l'utente è autenticato come società
+if (!isset($_SESSION['username']) || $_SESSION['ruolo'] !== 'societa') {
+    // Se l'utente non è autenticato o non è una società, reindirizza alla pagina di login
+    header("Location: login.php");
+    exit();
+}
+
+// Ottieni il nome della società dalla sessione
+$societa = $_SESSION['username'];
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +25,11 @@
 </head>
 <body>
   <div class="container">
-    <h1>Dashboard Società</h1>
+  <div class="d-flex justify-content-between align-items-center">
+    <h1><?php echo $societa; ?></h1>
+    <button class="btn btn-primary" onclick="window.location.href = '../front end/aggiungi giocatore.html'" style="padding-left=50%">Aggiungi Giocatore</button>
+    <button class="btn btn-danger" onclick="logout()">Logout</button>
+  </div>
 
     <!-- Elenco dei giocatori -->
     <h2>Giocatori</h2>
@@ -118,6 +139,24 @@
     xhttp.send();
   }
     }
+    
+    function logout() {
+    // Effettua una richiesta AJAX per eseguire il logout
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // Reindirizza alla pagina di login
+        window.location.href = "login.php";
+      }
+    };
+    xhttp.open("GET", "logout.php", true);
+    xhttp.send();
+  }
+
+  function apriAggiungiGiocatoreModal() {
+    // Apri il modulo
+    $('#aggiungiGiocatoreModal').modal('show');
+  }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
