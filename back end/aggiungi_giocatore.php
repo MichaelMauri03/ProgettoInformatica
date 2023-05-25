@@ -32,7 +32,8 @@ if ($result->num_rows === 1) {
     // Ricevi i dati del nuovo giocatore dal modulo di aggiunta
     $nome = $_POST['nome'];
     $cognome = $_POST['cognome'];
-    $ruolo = $_POST['ruolo'];
+    $email = $_POST['email']
+    $password = $_POST['password'];
     $numero_gol = $_POST['numero_gol'];
     $numero_assist = $_POST['numero_assist'];
     $cartellini_gialli = $_POST['cartellini_gialli'];
@@ -47,9 +48,9 @@ if ($result->num_rows === 1) {
         echo "Errore durante l'aggiunta del giocatore: il giocatore esiste già nel database.";
     } else {
         // Query per aggiungere il nuovo giocatore al database
-        $sql = "INSERT INTO Giocatore (ID_societa, Nome, Cognome, Ruolo, Numero_gol_segnati, Numero_assist, 
+        $sql = "INSERT INTO Giocatore (ID_societa, Nome, Cognome, Email_giocatore, Password_giocatore, Ruolo, Numero_gol_segnati, Numero_assist, 
                 Cartellini_gialli, Cartellini_rossi, Partite_giocate) 
-                VALUES ($id_societa, '$nome', '$cognome', '$ruolo', $numero_gol, $numero_assist, 
+                VALUES ($id_societa, '$nome', '$cognome', '$email', '$password', '$ruolo', $numero_gol, $numero_assist, 
                 $cartellini_gialli, $cartellini_rossi, $partite_giocate)";
 
         if ($conn->query($sql) === TRUE) {

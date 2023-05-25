@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $row = $result->fetch_assoc();
         $_SESSION['username'] = $row['Nome_societa'];
         $_SESSION['ruolo'] = 'societa';
-        header("Location: dashboard_societa.php");
+        header("Location: dashboard società.php");
         exit();
     } else {
         // Query per cercare un giocatore con l'email e password specificate
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $row = $result->fetch_assoc();
             $_SESSION['username'] = $row['Nome'];
             $_SESSION['ruolo'] = 'giocatore';
-            header("Location: dashboard_giocatore.php");
+            header("Location: dashboard giocatore.php");
             exit();
         } else {
             // Autenticazione fallita
